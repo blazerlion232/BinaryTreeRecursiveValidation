@@ -7,22 +7,32 @@ public class W3D2_ValidateBST {
      * @param root The root of the binary tree.
      * @return true if the tree is a valid BST, false otherwise.
      */
+     public long findMin(TreeNode root){
+
+            if(root == null){
+                return Integer.MAX_VALUE;
+            }
+            long leftMin = findMin(root.left);
+            long rightMin = findMin(root.right);
+            return Math.min(root.val, Math.min(leftMin,rightMin));
+      }
+      public long findMax(TreeNode root){
+
+            if(root == null){
+                return Integer.MAX_VALUE;
+            }
+            long leftMax = findMax(root.left);
+            long rightMax = findMax(root.right);
+            return Math.max(root.val, Math.max(leftMax,rightMax));
+      }
+    
+    
     public boolean isValidBST(TreeNode root) {
 
-        long max = 0;
-        long min = 0;
-        TreeNode current = root;
-        TreeNode current2 = root;
-
-        while(current.left != null){
-            current = current.left;
-        }
-        min = current.val;
-        while(current2.right != null){
-            current2 = current2.right;
-        }
-        max = current2.val;
+        long min = findMin(root);
+        long max = findMax(root);
         return isValid(root, min, max);
+        }
 
     }
 
