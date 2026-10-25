@@ -8,20 +8,45 @@ public class W3D2_ValidateBST {
      * @return true if the tree is a valid BST, false otherwise.
      */
     public boolean isValidBST(TreeNode root) {
-       // TODO: Implement the in valid BST logic.
-        return null; // Placeholder - replace with your implementation
+
+        long max = 0;
+        long min = 0;
+        TreeNode current = root;
+        TreeNode current2 = root;
+
+        while(current.left != null){
+            current = current.left;
+        }
+        min = current.val;
+        while(current2.right != null){
+            current2 = current2.right;
+        }
+        max = current2.val;
+        return isValid(root, min, max);
+
     }
 
     /**
      * Recursive helper to validate the BST property for a node and its subtrees.
      * @param node The current node to validate.
-     * @param min The minimum allowed value for this node (exclusive).
+     * @param min The minimum allowed 
+     * @param value for this node (exclusive).
      * @param max The maximum allowed value for this node (exclusive).
      * @return true if the subtree rooted at 'node' is a valid BST, false otherwise.
      */
     private boolean isValid(TreeNode node, long min, long max) {
-        // TODO: Implement the is valid logic.
-        return null; // Placeholder - replace with your implementation
+
+        if(node.val > max || node.val < min){
+            return false;
+        }
+        while(node != null){
+            TreeNode right = node.right;
+            TreeNode left = node.left;
+
+            isValidBST(right);
+            isValidBST(left);
+        }
+        return true;
     }
 
     // Main method to test the validation
