@@ -1,4 +1,3 @@
-import javax.swing.tree.TreeNode;
 
 public class W3D2_ValidateBST {
 
@@ -7,56 +6,22 @@ public class W3D2_ValidateBST {
      * @param root The root of the binary tree.
      * @return true if the tree is a valid BST, false otherwise.
      */
-     public long findMin(TreeNode root){
-
-            if(root == null){
-                return Integer.MAX_VALUE;
-            }
-            long leftMin = findMin(root.left);
-            long rightMin = findMin(root.right);
-            return Math.min(root.val, Math.min(leftMin,rightMin));
-      }
-      public long findMax(TreeNode root){
-
-            if(root == null){
-                return Integer.MAX_VALUE;
-            }
-            long leftMax = findMax(root.left);
-            long rightMax = findMax(root.right);
-            return Math.max(root.val, Math.max(leftMax,rightMax));
-      }
-    
-    
+     
     public boolean isValidBST(TreeNode root) {
-
-        long min = findMin(root);
-        long max = findMax(root);
-        return isValid(root, min, max);
+        if(root == null){
+            return true;
         }
-
+        return isValid(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
-    /**
-     * Recursive helper to validate the BST property for a node and its subtrees.
-     * @param node The current node to validate.
-     * @param min The minimum allowed 
-     * @param value for this node (exclusive).
-     * @param max The maximum allowed value for this node (exclusive).
-     * @return true if the subtree rooted at 'node' is a valid BST, false otherwise.
-     */
     private boolean isValid(TreeNode node, long min, long max) {
-
-        if(node.val > max || node.val < min){
+        if(node == null){
+            return true;
+        }
+        if(node.val <= min || node.val >= max){
             return false;
         }
-        while(node != null){
-            TreeNode right = node.right;
-            TreeNode left = node.left;
-
-            isValidBST(right);
-            isValidBST(left);
-        }
-        return true;
+        return isValid(node.left, min, node.val) && isValid(node.right, node.val, max);
     }
 
     // Main method to test the validation
